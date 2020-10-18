@@ -178,3 +178,18 @@ do {
         break
    }
 }
+
+
+// 函数类型
+
+let funcVar:(Int,Double)->Bool =  {
+    
+    (min:Int, max:Double)-> Bool in
+    
+    let sum = Double(min) + max ;
+    print("函数作为第一类值 \(sum)");
+    return true ;
+}
+
+
+print("函数类型 闭包 \(funcVar(12,3.3))");
