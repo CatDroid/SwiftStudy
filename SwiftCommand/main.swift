@@ -128,4 +128,53 @@ let tupleResult = MyTutleFuntion(array:testArray);
 
 print("输入数组 返回元组的函数 \(tupleResult.0) \(tupleResult.min) "); // 元祖下表从0开始
 
+struct Person
+{
+      var age:Int = 0 ;
+      var name:String = "";
+}
 
+enum ErrorTest:Error { // Error这个protocol，定义一下自己错误类型
+    case nameVisiableError
+    case ageError
+    case heightError
+    case nameLengthError
+}
+
+// 可以抛出错误的方法 必须 在方法声明的后面加上throws关键字，表示该方法可以抛出错误 否则编译出错
+func checkPerson(p:Person) throws -> String {
+       guard p.age>0 && p.age<120 else {
+           throw ErrorTest.ageError
+       }
+       guard p.name.count<10 && p.name.count>0 else {
+           throw ErrorTest.nameVisiableError
+       }
+      return "success"
+   }
+
+let p2 = Person(age: 1000, name: "小明") // 结构体可以逐一显式设置成员属性的值，类不可以
+
+do {
+    
+//    try：会执行函数之后抛出函数
+//    try?是选择类型的执行，当报错的时候，返回nil，不报错的时候返回正常的值
+//    try!是强制解包，当抛出异常的时候也解包，导致崩溃问题。
+    
+    let result2 = try checkPerson(p: p2) // try后面必须接用throws 修饰的函数或方法，
+    //不报错 下边会输出，报错则不执行
+    try print("try的结果是", result2) // 只是警告 No calls to throwing functions occur within 'try' expression
+} catch let error { // 可以不写error 默认是error
+    //报错则执行相对应的错误类型
+    switch error {
+    case ErrorTest.ageError:
+        print("ageError"); //break 可以没有break
+    case ErrorTest.nameLengthError:
+        print("nameLengthError"); //break
+    case ErrorTest.nameVisiableError:
+        print("nameLengthError"); //break
+    case ErrorTest.heightError:
+        print("heightError"); //break
+    default:
+        break
+   }
+}
