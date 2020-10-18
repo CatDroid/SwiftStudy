@@ -30,6 +30,12 @@ class ConsoleIO {
         
     }
     
+    // 外部参数名 和 内部参数名
+    public func funcArgName(  x:Int,   y:Int,  z:Int,   w:Double)
+    {
+        print("函数的局部名称和外部名称 \(x) \(y) \(z) \(w)");
+    }
+    
     
     // Switch当然也支持显式的break，通常只有一种情况下你会这么做，
     // 那就是当你也不想在default里做任何事情的时候，这个时候你就可以在default里显式地加上一句break

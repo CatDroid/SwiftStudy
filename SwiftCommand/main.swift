@@ -267,3 +267,20 @@ let MyFunc2 = MyFunc(fixInt:3) { // 闭包是函数最后一个参数 可以写�
 
 print("逃逸闭包 \(MyFunc2(12))"); // false
 print("逃逸闭包 \(MyFunc2(3.0))");// true
+
+
+// Swift中默认给参数局部参数名称和外部参数名称默认相同。
+// 如果不想为方法的参数提供外部参数名称，在前面使用下划线 (_) 作为该参数的显式外部名称
+func funcArgName(_ x:Int, _ y:Int, _ z:Int, _ w:Double) // 前面使用下划线 (_) 作为该参数的显式外部名称
+{
+    print("函数的局部名称和外部名称 \(x) \(y) \(z) \(w)");
+}
+
+funcArgName(1, 2, 3, 4);
+//funcArgName(x:1, y:2, z:3, w:4); // 如果函数声明时候没有 _   必须显式使用外部参数名(默认跟内部参数名一样)
+
+let obj1 = ConsoleIO();
+obj1.funcArgName(x:1, y:2, z:3, w:4);
+
+
+
