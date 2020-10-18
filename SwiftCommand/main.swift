@@ -320,9 +320,118 @@ ifFunc("hello"); // ifFunc arg is NOT nil hello
 guardFunc(nil);  // ifGurad arg is nil
 
 
+// 枚举类型
+enum Movement:Int {
+    case LEFT
+    case RIGHT
+    case TOP
+    case BOTTOM
+}
+
+/*
+ 整型(Integer)
+ 浮点数(Float Point)
+ 字符串(String)
+ 布尔类型(Boolean)
+ */
 
 
+let aMove = Movement.LEFT
 
 
+switch aMove {
+case Movement.LEFT:
+    print("Enum switch Left")
+case .RIGHT: // 省略 Movement.
+    print("Enum switch right")
+default:
+    print("Enum default");
+}
+
+if aMove == .RIGHT {
+    print("enum match");
+} else {
+    print("enum not match");
+}
+
+// enum 算是特殊的class DG GZ都是实例化的对象 构造函数是private的
+enum Area: String {
+    case JM = "jiangmen"
+    case GZ = "guangzhou"
+    case SZ = "shenzhen"
+    
+    func introduce() -> String {
+        switch self {
+        case .JM: return "I come from jiangmen "
+        case .GZ: return "I come from guangzhou "
+        case .SZ: return "I come from shenzhen "
+        default:
+            return "I don't know where i come from"
+        }
+    }
+    
+    // 属性  计算属性 只能读取  没有 { get{} set{} }
+    var name: String {
+        switch self {
+        case .JM,.GZ,.SZ : return self.rawValue
+        default:
+            return "unknown"
+        }
+    }
+}
+
+print("enum string raw value \(Area.GZ.rawValue)") // guangzhou
+
+if let newArea = Area.init(rawValue: "zhongshan") {
+    print("使用原始值类型定义枚举 match \(newArea)")
+} else {
+    print("使用原始值类型定义枚举 not match enum ")
+}
+
+print("enum function \(Area.JM.introduce())")
+
+print("只读属性 \(Area.JM.name)")
+
+// 关联值
+//   枚举类型中在枚举项的旁边"存贮额外的其他类型的值"，这些值被称为关联值。
+//   并且每次在代码中使用有关联值的枚举项时，该关联值都会有所不同。
+//   Swift中可以定义枚举以"存储任何给定类型的关联值"，并且每个枚举项的值类型也可以不同
+enum Trade {
+    case Buy(stock:String,amount:Int)
+    case Sell(stock:String,amount:Int,fax:Double)
+    case Pend(String,Int,Bool) // 这样不用外部参数名字
+    
+    // 增加一个存储属性到枚举中不被允许，但你依然能够创建计算属性
+    // 计算属性的内容都是建立在枚举值下或者枚举关联值得到的
+    var info:String {
+        switch self {
+        case .Buy(let stock, let amount):
+            return  "stock:\(stock),amount:\(amount)"
+        case .Sell(let stock, let amount, let fax):
+            return  "stock:\(stock),amount:\(amount) fax:\(fax)"
+        case .Pend(let name, let total, let full):
+            return "name:\(name),total:\(total) full:\(full)"
+        }
+    }
+    
+}
+
+// 枚举的case可以传值
+let trade = Trade.Buy(stock: "003100", amount: 100)
+
+// 使用Switch语句  匹配枚举项  并且  提取 "枚举项的关联值"
+// 可以使用let和var将每个关联值  "提取为常量或变量" ，以在case的正文中使用
+
+switch trade {
+case .Buy(let stock, let amount):
+    print("stock:\(stock),amount:\(amount)")
+case .Sell(let stock, let amount, let fax):
+    print("stock:\(stock),amount:\(amount) fax:\(fax)")
+case .Pend(let name, let total, let full):
+    print("name:\(name),total:\(total) full:\(full)")
+}
+
+
+print("enum只读属性 与关联值  \(Trade.Pend( "shanghai", 12, false).info)" )
 
 
