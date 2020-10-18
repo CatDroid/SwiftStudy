@@ -283,4 +283,17 @@ let obj1 = ConsoleIO();
 obj1.funcArgName(x:1, y:2, z:3, w:4);
 
 
+let array1 = ["0", "1" , "2" , "3"]
+let range = 0..<array1.count  // 区间运算符 返回类型是Range<int>   半开区间,适合遍历数组
+for idx in range
+{
+    print("idx = \(array1[idx])" );
+}
+
+
+
+
+
+
+
 
