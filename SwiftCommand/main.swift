@@ -181,15 +181,89 @@ do {
 
 
 // 函数类型
+/*
+  Kotlin的lambda
+ 
+ val fullLambda : (Int,Double)->Boolean = {
+         number:Int,number2:Double -> Boolean  // lambda表达式中函数参数不能用() 没有参数就留空
+             if (number.toDouble() == number2) {
+                 //return true ;
+                 true ;
+             } else  {
+                 false ;
+             }//  在非内联的Lambda表达式中不能使用 return
+     }
+ 
+ */
 
 let funcVar:(Int,Double)->Bool =  {
-    
+
     (min:Int, max:Double)-> Bool in
-    
+
     let sum = Double(min) + max ;
     print("函数作为第一类值 \(sum)");
     return true ;
 }
 
+let funcVarSimple:(Int,Double)->Bool =  {
+    min, max in // 自动推断类型 不用写() 和 ->返回值类型
+    let sum = Double(min) + max ;
+    return sum != 0 ; // 除非只有单行 才不用return ; 跟kotlin不一样 必须return
+}
+
+let funcVarMoreSimple:(Int,Double)->Bool =  { Double($0) + $1 != 0   }
+// 自动参数名字  省略 参数名字和 in
+// 单行表达式。  省略return
+
+print("最简化的闭包 \(funcVarMoreSimple(1,1)) , \(funcVarMoreSimple(1,-1.0))  ") // 最简化的闭包 true , false
+
+/*
+ 
+ 非逃逸闭包: 一个接受闭包作为参数的函数， 闭包是在这个函数结束前内被调用。
+ 逃逸闭包: 一个接受闭包作为参数的函数，该闭包可能在函数返回后才被调用，也就是说这个闭包逃离了函数的作用域
+ (包括最为返回值 或者 DispatchQueue.global().async 异步执行)
+ 
+ 当你声明一个接受闭包作为形式参数的函数时，你可以在形式参数前写@escaping来明确闭包是允许逃逸
+ 
+ 逃逸闭包的生命周期长于函数，函数退出的时候，逃逸闭包的引用仍被其他对象持有，不会在函数结束时释放。
+ 
+ 为什么要分逃逸闭包和非逃逸闭包
+
+ 为了管理内存，闭包会强引用它捕获的所有对象，
+ 比如你在闭包中访问了当前控制器的属性、函数，
+ 编译器会要求你在闭包中显示 self 的引用，
+ 这样闭包会持有当前对象，容易导致循环引用。
+
+ 非逃逸闭包不会产生循环引用，它会在函数作用域内释放，
+ 编译器可以保证在函数结束时闭包会释放它捕获的所有对象；
+ 
+ 使用非逃逸闭包的另一个好处是编译器可以应用更多强有力的性能优化，
+ 例如，当明确了一个闭包的生命周期的话，
+ 就可以省去一些保留（retain）和释放（release）的调用；
+ 此外非逃逸闭包它的上下文的内存可以保存在栈上而不是堆上。
+
+ 综上所述，如果没有特别需要，开发中使用非逃逸闭包是有利于内存优化的，
+ 所以苹果把闭包区分为两种，特殊情况时再使用逃逸闭包。
+ 
+ */
+func MyFunc(fixInt:Int, closure:@escaping (Int,Double)->Bool ) -> (Double)->Bool
+{
+    return {
+        (arg:Double) -> Bool in
+        return closure(fixInt, arg);
+    }
+}
 
 print("函数类型 闭包 \(funcVar(12,3.3))");
+
+let MyFunc2 = MyFunc(fixInt:3) { // 闭包是函数最后一个参数 可以写在外面: 挂尾闭包
+    (arg1:Int, arg2:Double) -> Bool in
+    if (Double(arg1) == arg2) {
+        return true ;
+    } else {
+        return false ;
+    }
+}
+
+print("逃逸闭包 \(MyFunc2(12))"); // false
+print("逃逸闭包 \(MyFunc2(3.0))");// true
