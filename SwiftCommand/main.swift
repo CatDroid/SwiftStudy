@@ -291,6 +291,35 @@ for idx in range
 }
 
 
+func ifFunc(_ arg:String?)
+{
+    if let n = arg // n的类型是 String 不是可选类型
+    {
+        print("ifFunc arg is NOT nil \(n)")
+    }
+    else
+    {
+        //print("ifGurad arg is nil \(n)") // 不能用n 在else块中 n是没有定义的
+        print("ifFunc arg is nil");
+        return
+    }
+}
+
+func guardFunc(_ arg:String?)
+{
+    guard let n = arg  else {
+        print("ifGurad arg is nil  ")
+        return
+    }
+    // 这里是可以使用 局部变量n的
+    print("ifGurad arg is NOT nil \(n)")
+   
+}
+
+ifFunc("hello"); // ifFunc arg is NOT nil hello
+guardFunc(nil);  // ifGurad arg is nil
+
+
 
 
 
