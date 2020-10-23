@@ -13,9 +13,23 @@ struct MyStruct
 {
     var a:Int = 2 ;
     var b:Bool = false ;
+    
+    // 如果自定义了构造函数，就不会有默认构造函数
+//    init(temp1:Int) {
+//        a = temp1
+//    }
  
+    
+//    deinit { // Deinitializers may only be declared within a class
+//        <#statements#>
+//    } // 只有类(引用类型)才可以使用析构
 }
 
+// 结构体不可以被继承
+//struct MyStruct2:MyStruct
+//{
+//
+//}
 
 func entry() -> Void
 {
