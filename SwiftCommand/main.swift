@@ -130,8 +130,8 @@ print("输入数组 返回元组的函数 \(tupleResult.0) \(tupleResult.min) ")
 
 struct Person
 {
-      var age:Int = 0 ;
-      var name:String = "";
+    var age:Int = 0 ;
+    var name:String = "";
 }
 
 enum ErrorTest:Error { // Error这个protocol，定义一下自己错误类型
@@ -282,6 +282,8 @@ funcArgName(1, 2, 3, 4);
 let obj1 = ConsoleIO();
 obj1.funcArgName(x:1, y:2, z:3, w:4);
 
+obj1.WatcherWal = 21 ; // 属性观察器
+
 
 let array1 = ["0", "1" , "2" , "3"]
 let range = 0..<array1.count  // 区间运算符 返回类型是Range<int>   半开区间,适合遍历数组
@@ -365,8 +367,7 @@ enum Area: String {
         case .JM: return "I come from jiangmen "
         case .GZ: return "I come from guangzhou "
         case .SZ: return "I come from shenzhen "
-        default:
-            return "I don't know where i come from"
+      
         }
     }
     
@@ -374,8 +375,15 @@ enum Area: String {
     var name: String {
         switch self {
         case .JM,.GZ,.SZ : return self.rawValue
-        default:
-            return "unknown"
+      
+        }
+    }
+    
+    mutating func moveToOtherPlace() { // 枚举或者结构体 需要修改成员属性 必须声明mutating
+        switch self {
+        case .JM: self = .GZ
+        case .GZ: self = .SZ
+        case .SZ: self = .JM
         }
     }
 }
@@ -391,6 +399,12 @@ if let newArea = Area.init(rawValue: "zhongshan") {
 print("enum function \(Area.JM.introduce())")
 
 print("只读属性 \(Area.JM.name)")
+
+var place = Area.GZ;
+print("before move \(place)")   // GZ
+place.moveToOtherPlace()
+print("after move \(place)")    // SZ
+print("Area.GZ = \(Area.GZ)")   // GZ
 
 // 关联值
 //   枚举类型中在枚举项的旁边"存贮额外的其他类型的值"，这些值被称为关联值。
@@ -433,5 +447,61 @@ case .Pend(let name, let total, let full):
 
 
 print("enum只读属性 与关联值  \(Trade.Pend( "shanghai", 12, false).info)" )
+
+struct MyPerson1 {
+    var name: String = ""
+    var age: Int = 0
+    
+    /**
+     结构体枚举等值类型的中，这里在普通的实例方法中不允许修改属性
+     如果一定要修改，在func前面加上 mutating；
+     如果 MyPerson1 是class 就没有必要加mutating
+     */
+     mutating func set(name: String, age: Int) -> Void {
+        self.name = name // Cannot assign to property: 'self' is immutable
+        self.age = age
+    }
+    
+    func show() -> Void {
+        print("name=\(name), age=\(age)")
+    }
+    
+}
+
+
+//let p1 = MyPerson1(name:"tom",age:12)  // let的话 是个常量。不能修改 调用mutating函数
+var p1 = MyPerson1(name:"tom",age:12)
+p1.set(name:"cat",age:13) // Cannot use mutating member on immutable value: 'p1' is a 'let' constant
+p1.show()
+
+
+class PersonClass
+{
+    var age:Int = 0 ;
+    var name:String = "";
+    static let classify:String = "is Person"
+    
+    func set(age:Int, name:String)
+    {
+        self.age = age ;
+        self.name = name ;
+    }
+    
+    // mutating // mutating' isn't valid on methods in classes or class-bound protocols
+    func show() -> Void {
+        print("name=\(name), age=\(age)")
+    }
+    
+    class func ClassFunction() -> Void {
+        print("类方法 不适用用static修饰，而是用class修饰 ，结构体的类方法用static修饰 ")
+    }
+}
+
+let p3 = PersonClass();
+p3.set(age:20, name:"tom"); // p3 虽然是let 但是可以修改成员变量
+p3.show();
+PersonClass.ClassFunction();
+
+
 
 

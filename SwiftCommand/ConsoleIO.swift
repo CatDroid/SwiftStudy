@@ -61,6 +61,31 @@ class ConsoleIO {
     }
     
     
+    public var WatcherWal:Int = 0 {
+        willSet(overLaynewValue) {
+            print("[属性观察器] will set WatcherWal \(overLaynewValue)")
+        }
+        
+        didSet{
+            print("[属性观察器] after set, oldValue is \(oldValue)")
+        }
+    }
+    /*
+     
+     用willset和didset监视器来声明一个存储型变量或属性
+     存储型变量监视器和属性监视器
+     var variable name: type = expression {
+         willSet(setter name) {
+            statements
+         }
+         didSet(setter name) {
+            statements
+         }
+     }
+     
+     
+     */
+    
 }
 
 
