@@ -284,6 +284,11 @@ obj1.funcArgName(x:1, y:2, z:3, w:4);
 
 obj1.WatcherWal = 21 ; // 属性观察器
 
+//obj1.privateSetAndPublicGetProperty = 2 ;
+// Cannot assign to property: 'privateSetAndPublicGetProperty' setter is inaccessible
+print("带有私有设置方法的公有属性 \(obj1.privateSetAndPublicGetProperty)");
+
+
 
 let array1 = ["0", "1" , "2" , "3"]
 let range = 0..<array1.count  // 区间运算符 返回类型是Range<int>   半开区间,适合遍历数组

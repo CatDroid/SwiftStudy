@@ -60,6 +60,8 @@ class ConsoleIO {
         return matchFlag
     }
     
+    private(set) var privateSetAndPublicGetProperty:Int = 5 ;
+    
     
     public var WatcherWal:Int = 0 {
         willSet(overLaynewValue) {
