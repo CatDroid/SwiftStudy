@@ -212,7 +212,7 @@ func test(key:String)
     
 }
 
-func entry() -> Void
+func ClassEntry() -> Void
 {
     var temp:MyStruct = MyStruct(a: 12, b: true) ;
     temp.a = 3 ;
