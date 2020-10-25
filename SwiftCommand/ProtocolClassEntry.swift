@@ -21,13 +21,15 @@ protocol MyInterface {
     static var classProperty:String{get}
     
     mutating func flip();
+    
+    // 通过协议规定“实现类” 去实现特定的构造函数
+    init(read:Bool, info:String)
 }
 
 
 class MyProtocalImplementClass:MyInterface
 {
 
-    
     func addToString(arg1: Int, arg2: Int) -> String {
         return "\(arg1 + arg2)"
     }
@@ -39,7 +41,16 @@ class MyProtocalImplementClass:MyInterface
     
     init(_ opened:Bool, _ info:String)
     {
+        print("MyProtocalImplementClass 指定构造函数");
         readOnlyProperty = opened
+        readWriteProperty = info
+    }
+    
+    // 协议的构造函数 必须require 必要的构造函数
+    required init(read:Bool, info:String)
+    {
+        print("MyProtocalImplementClass 必要构造函数");
+        readOnlyProperty = read
         readWriteProperty = info
     }
     
@@ -98,9 +109,17 @@ enum MyProtocalEnum : MyInterface{
         } else {
             self = .OFF ;
         }
-        
     }
     
+    // required  非class中实现协议规定构造函数 不用required
+    init(read:Bool, info:String)
+    {
+        if (read) {
+            self = .ON ;
+        } else {
+            self = .OFF ;
+        }
+    }
 
     
 }
