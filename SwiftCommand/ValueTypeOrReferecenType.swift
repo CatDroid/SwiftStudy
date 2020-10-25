@@ -21,7 +21,7 @@ struct MyStruct
  
     
 //    deinit { // Deinitializers may only be declared within a class
-//        <#statements#>
+//        statements
 //    } // 只有类(引用类型)才可以使用析构
 }
 
@@ -77,7 +77,7 @@ class SubClass:Base
     // 给定构造函数 不能 委托本类的构造函数
     // Designated initializer for 'SubClass' cannot delegate (with 'self.init');
     override convenience init(n:String) {
-        self.init(n:n, id:0)
+        self.init(n:n, id:12)
     }
     
     
@@ -108,5 +108,13 @@ func entry() -> Void
     let result:String  = temp3.overrideFunc(n:"call with result "); // No exact matches in call to instance method 'overrideFunc'
 
     //temp3.overrideFunc(n:"call with result "); // 模棱两可的使用  Ambiguous use of 'overrideFunc(n:)'
+    
+    // 默认不自动继承父类的构造函数，除非
+    // 1.子类引入的新属性都有默认值，子类没有定义指定构造函数--就会自动继承父类的指定构造函数
+    // 2.子类提供了所有父类的指定构造函数(包含1方式或者自定义方式)，就会自动继承父类的便利构造函数
+    let temp4 = SubClass(); // 调用了SubClass继承Base的便利构造函数convenience init() 其中self.init委托给了 SubClass的便利构造函数convenience init(name:String)
+    print("init() = \(temp4.id) \(temp4.name)")
+ 
+   
     
 }
