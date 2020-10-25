@@ -91,6 +91,28 @@ class SubClass:Base
         print("SubClass overrideFunc \(n)")
         return ""
     }
+    
+}
+
+class FailClass
+{
+    let id:Int ;
+    let str:String;
+    init? (id:Int) {
+        if (id == 0) {
+            return nil;
+        }
+        self.id = id ;
+        self.str = "default"
+    }
+    
+    // return nil 代表失败，并且整个构造函数链立刻返回
+    // 子类可用不可失败的构造函数overrid父类的可失败构造函数
+    //A non-failable initializer cannot delegate to failable initializer
+    // 不可失败构造函数 不能委托 可失败构造函数
+    //convenience init(){
+    //    self.init(id:12);
+    //}
 }
 
 func entry() -> Void
@@ -115,6 +137,10 @@ func entry() -> Void
     let temp4 = SubClass(); // 调用了SubClass继承Base的便利构造函数convenience init() 其中self.init委托给了 SubClass的便利构造函数convenience init(name:String)
     print("init() = \(temp4.id) \(temp4.name)")
  
+    
+    let fail:FailClass? = FailClass(id:0);
+    
+    
    
     
 }
