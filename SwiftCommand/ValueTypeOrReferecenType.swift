@@ -182,6 +182,35 @@ class FailClass
 
 }
 
+var dictTest = [
+    "name" : false ,
+    "ok" : true
+]
+
+func test(key:String)
+{
+    
+    guard let flag = dictTest[key]  else {
+        //print("guard flag? is \(flag)") //Variable declared in 'guard' condition is not usable in its body
+        print("guard is false")
+        return
+    } // guard' body must not fall through, consider using a 'return' or 'throw' to exit the scope
+    // guard的block必须return或者throw
+    print("guard is true \(flag)");
+    
+    
+    let name: String? = "老王"
+    let age: Int? = 10
+
+    // if let 连用,判断对象的值是否为'nil'
+    if let nameNew = name,  let ageNew = age { // nameNew和 ageNew的作用域仅在{}中
+        
+        // 进入分支后,nameNew 和 ageNew 一定有值
+        print(nameNew + String(ageNew)) // 输出:老王10
+    }
+    
+}
+
 func entry() -> Void
 {
     var temp:MyStruct = MyStruct(a: 12, b: true) ;
@@ -240,6 +269,10 @@ func entry() -> Void
     //print(resultOfRange); // Cannot find 'resultOfRange' in scope
     
 
+    test(key:"name");
+    
+
+    
     print("End of Entry");
     
 }
