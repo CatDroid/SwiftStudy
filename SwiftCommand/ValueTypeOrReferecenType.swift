@@ -189,6 +189,7 @@ var dictTest = [
 
 func test(key:String)
 {
+    let nullableFlag: Bool? = dictTest[key]
     
     guard let flag = dictTest[key]  else {
         //print("guard flag? is \(flag)") //Variable declared in 'guard' condition is not usable in its body
