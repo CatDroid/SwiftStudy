@@ -516,4 +516,5 @@ PersonClass.ClassFunction();
 
 ClassEntry();
 ProtocolClassEntry();
+ExtensionEntry();
 

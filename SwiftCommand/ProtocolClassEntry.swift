@@ -184,10 +184,29 @@ func ProtocolClassEntry()
     // 0 ~ X 之间的随机数
     let NwNumber2 = arc4random() % 10
     if NwNumber2 > 5 {
-        temp = MyProtocalImplementClass(true, "first")
-    } else {
         temp = MyProtocalEnum(flag:true)
+    } else {
+        temp = MyProtocalImplementClass(true, "first")
     }
+    
+    // 检查协议一致性
+    // is 检查是否实现某个协议
+    // as 对协议类型进行转换 as?没有实现类型时候返回nil as!没有实现类型异常
+    
+    // Value of type 'MyInterface?' does not conform to 'MyProtocal3' in coercion
+    //if let temp3 = temp as MyProtocal3 {
+    let temp3:AnyObject = temp as AnyObject; // 不能是Any Any is MyProtocal3 总是返回false
+    let temp5:Any = temp as Any;
+    print("temp = \(temp)");
+    print("AnyObject is protocol? \(temp3 is MyProtocal3)");
+    print("Any is protocol? \(temp5 is MyProtocal3)");
+    if let temp4 = temp3 as? MyProtocal3 {
+        print("as?没有实现类型时候返回nil");
+        temp4.dumpName();
+    }
+    // AnyObject：可以代表任何class类型的实例；
+    // Any：可以代表任何类型，甚至包括方法(func)类型。
+     
     
 
     printAdd(temp);
