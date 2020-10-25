@@ -113,6 +113,24 @@ class FailClass
     //convenience init(){
     //    self.init(id:12);
     //}
+    
+    
+    // 通过‘函数或者闭包’设置属性的默认值,最后()代表执行
+    let boardColors:[Bool] = { // [Bool] = Array<Bool>
+        
+        var temp = [Bool]()
+        
+        var isBlack = false
+        for i in 1...10 {
+            for j in 1...10 {
+                temp.append(isBlack)
+                isBlack = !isBlack
+            }
+        }
+        
+        return temp
+    }()
+    
 }
 
 func entry() -> Void
