@@ -26,6 +26,18 @@ protocol MyInterface {
     init(read:Bool, info:String)
 }
 
+protocol MyProtocal2 {
+    func showName() -> String ;
+}
+
+protocol MyProtocal3: MyProtocal2 {
+    func dumpName() ;
+}
+
+protocol MyProtocol4 {
+    func dumpId();
+}
+
 
 class MyProtocalImplementClass:MyInterface
 {
@@ -121,7 +133,41 @@ enum MyProtocalEnum : MyInterface{
         }
     }
 
-    
+}
+
+// 在扩展中实现协议
+extension MyProtocalEnum: MyProtocal2 {
+    func showName() -> String {
+        if (self == .ON) {
+            return "在扩展中实现协议 ON"
+        } else {
+            return "在扩展中实现协议 OFF"
+        }
+    }
+}
+
+extension MyProtocalEnum: MyProtocal3 {
+    func dumpName() {
+        if (self == .ON) {
+            print("协议的继承 在扩展中已实现协议不用再实现 ON")
+        } else {
+            print("协议的继承 在扩展中已实现协议不用再实现 OFF")
+        }
+    }
+}
+
+extension MyProtocalEnum: MyProtocol4 {
+    func dumpId()
+    {
+        print("MyProtocalEnum not valid");
+    }
+}
+
+// 协议的组合。函数参数必须满足两个协议
+func callProtocolComposition(obj:  MyProtocol4 & MyProtocal3 )
+{
+    obj.dumpName();
+    obj.dumpId();
 }
 
 func printAdd(_ obj:MyInterface)
@@ -147,5 +193,12 @@ func ProtocolClassEntry()
     printAdd(temp);
     temp.flip()
     print("协议中函数声明为mutating,那么变量声明必须是var :\(String(describing: temp))");
+    
+    
+    
+    let temp2 = MyProtocalEnum(flag:true);
+    print("\(temp2.showName())");
+    temp2.dumpName(); // 扩展已经实现过的协议不用重复
+    callProtocolComposition(obj:temp2);
     
 }
