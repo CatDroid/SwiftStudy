@@ -49,6 +49,11 @@ class Base
     {
         print("Base overrideFunc \(n)")
     }
+    
+    deinit {
+        print("Base deinit");
+    }
+    
 }
 
 class SubClass:Base
@@ -92,6 +97,14 @@ class SubClass:Base
         return ""
     }
     
+    // 只能有一个析构函数
+    // 无参数  不用()  无返回值
+    // 先子类后父类  不用super.deinit()
+    deinit {
+        print("SubClass deinit");
+    }
+    
+    
 }
 
 class FailClass
@@ -131,6 +144,7 @@ class FailClass
         return temp
     }()
     
+
 }
 
 func entry() -> Void
