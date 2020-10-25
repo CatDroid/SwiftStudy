@@ -343,6 +343,11 @@ enum Movement:Int {
  */
 
 
+// 倘若使用rawValue构造器，切记它是一个可失败构造器(failable initializer)。
+// 换言之，构造方法返回值为可选类型值,因为有时候传入的值可能与任意一个case都不匹配。比如Movement(rawValue:42)。
+let failableInitEnum: Movement? = Movement(rawValue:42); // 调用的enum的 可失败构造函数 init?(rawValue:Int)
+
+
 let aMove = Movement.LEFT
 
 
