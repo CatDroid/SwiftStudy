@@ -107,6 +107,15 @@ class SubClass:Base
     
 }
 
+
+enum MyError: Error // Error 是个协议 所有错误都必须继承
+{
+    case OUT_OF_RANGE
+    case BAD_ID
+    // Swift 枚举中支持以下四种关联值类型: 整型(Integer); 浮点数(Float Point); 字符串(String); 布尔类型(Boolean)
+    case EXCEPTION(info:String) // 枚举关联值
+}
+
 class FailClass
 {
     let id:Int ;
@@ -117,6 +126,32 @@ class FailClass
         }
         self.id = id ;
         self.str = "default"
+    }
+    
+    func isValid() throws
+    {
+        if (id < 0) {
+            throw MyError.BAD_ID;
+        }
+    }
+    
+    func isOutOfRange() throws -> Bool
+    {
+        if (id > 10) {
+            throw MyError.OUT_OF_RANGE
+        }
+        return false
+    }
+    
+    func getException() throws
+    {
+        if (str.isEmpty) {
+            throw MyError.EXCEPTION(info: "Name is empty")
+        }
+        if (str.count > 10) {
+            throw MyError.EXCEPTION(info: "Name is too long")
+        }
+        
     }
     
     // return nil 代表失败，并且整个构造函数链立刻返回
@@ -172,7 +207,39 @@ func entry() -> Void
     
     let fail:FailClass? = FailClass(id:0);
     
+    print("可失败构造函数 init? \(fail)")
     
-   
+    let excpetion:FailClass? = FailClass(id:30); // 30 -1
+    do {
+        try excpetion?.getException(); // Call can throw, but it is not marked with 'try' and the error is not handled
+        let result:Bool? = try excpetion?.isOutOfRange(); // Errors thrown from here are not handled
+        print("错误处理 \(result ?? false) ")  // 空合操作符
+        try excpetion?.isValid();      // 如果函数声明了throws 必须try 以及用do catch来handle
+    } catch MyError.EXCEPTION(let information) { // 参数还可以这个形式 info:String
+        print("Enum Error \(information)")
+    } catch MyError.BAD_ID {
+        print("bad id");
+    } catch MyError.OUT_OF_RANGE {
+        print("id is out of range");
+    } catch { // 加入一个空的catch，用于关闭catch。否则会报错：Errors thrown from here are not handled because the enclosing catch is not exhaustive
+        
+    }
+    
+    //try! excpetion?.isValid(); // 不处理错误: 'try!' expression unexpectedly raised an error: SwiftCommand.MyError.BAD_ID
+    
+    // 错误时候返回nil
+    if let resultOfRange = try? excpetion?.isOutOfRange() { // 将错误转换为可选类型
+        print("out of range \(resultOfRange)") // false  if-let 变量为false 也会执行,只是用来判断非空
+    }
+    
+    let resultOfRange = try? excpetion?.isOutOfRange()
+    if  resultOfRange != nil  {
+        print("out of range \(resultOfRange)") // false
+    }
+    
+    //print(resultOfRange); // Cannot find 'resultOfRange' in scope
+    
+
+    print("End of Entry");
     
 }
