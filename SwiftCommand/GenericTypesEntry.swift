@@ -91,7 +91,8 @@ func findFirstMatched<T:Equatable>(_ array:[T], _ wanted:T)->Int?
     return nil
 }
 
-
+// protocol 和 class、struct 以及 enum 不同，它不支持泛型类型参数。代替支持抽象类型成员；在 Swift 术语中称作关联类型
+// swift中的协议(protocol)采用的是“Associated Types”的方式来实现泛型功能的，通过associatedtype关键字来声明一个类型的占位符作为协议定义的一部分
 // 关联类型，协议中的泛型 在协议实现之前都不需要指定
 protocol MyContainerProtocol {
     
@@ -105,6 +106,52 @@ protocol MyContainerProtocol {
     var myCount:Int {get}  // 只读属性
     
 }
+
+//protocol MyProtocol {
+//    associatedtype Element
+//    associatedtype SubSequence : Sequence where SubSequence.Iterator.Element == Iterator.Element
+//    // 可以在 associatedtype 后面声明的类型后追加 where 约束语句
+//}
+
+
+//Protocol 'MyContainerProtocol' can only be used as a generic constraint(通用约束) because it has Self or associated type requirements(关联类型要求)
+// 由于协议存在关联类型 如果一个函数参数指定了这个协议类型，还不足够 必须内部的关联类型也一致, 所以一个带有关联类型的不能直接作为函数参数
+
+//func arrayMatch(_ lhs: MyContainerProtocol, _rhs:MyContainerProtocol)
+func arrayMatch<C1:MyContainerProtocol,C2:MyContainerProtocol>(_ lhs: C1, _ rhs:C2) -> Bool
+    where C1.U == C2.U, C1.U : Equatable  // 对关联类型的两个约束  == 类型一样
+
+{
+    if (lhs.myCount != rhs.myCount) {
+        return false ;
+    }
+    
+    for i in 0 ..< lhs.myCount { // 区间运算符
+        if rhs[i] != lhs[i] {
+            return false ;
+        }
+    }
+    return true ;
+}
+
+// 或者这样
+func arrayMatch2<C1:MyContainerProtocol >(_ lhs: C1, _ rhs:C1) -> Bool
+    where C1.U : Equatable
+{
+    if (lhs.myCount != rhs.myCount) {
+        return false ;
+    }
+
+    for i in 0 ..< lhs.myCount { // 区间运算符
+        if rhs[i] != lhs[i] {
+            return false ;
+        }
+    }
+    return true ;
+}
+
+
+
 
 extension Array : MyContainerProtocol{
 
@@ -161,7 +208,7 @@ func GenericTypesEntry() -> Void
     extesionArray.addOne(1);
     print("协议中的关联类型 associateType 和 typealias  \(extesionArray.myCount)" ) // 4
     
-    
+    print("where条件语句 约束 关联类型 \(arrayMatch([2,7,8],[2,7,8]))")
 }
 
 
