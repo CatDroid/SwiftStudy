@@ -32,6 +32,45 @@ struct Stack<Element>
     
 }
 
+// 要使用字典键的任何自定义类型都必须符合Hashable协议。
+// 这个协议有一个必须实现的属性。
+// var hashValue: Int { get }
+// 使用此属性生成一个int，字典可以使用它进行查找
+// Hashable继承自Equatable您还必须实现
+// func ==(_ lhs: Self, _ rhs: Self) -> Bool.
+
+struct Pixel : Hashable {
+
+    let x:Int  ;
+    let y:Int  ;
+    init(_ x:Int ,_ y:Int) {
+        self.x = x ;
+        self.y = y ;
+    }
+    
+    // MARK: Hashable
+//    var hashValue: Int {
+//        get {
+//            return self.x * 31499 + self.y
+//        }
+//    }
+    
+    // Swift字典的健 参数类型 必须是一个哈希类型/可哈希
+    // 基本类型 String Int Double Bool 都是可哈希
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(self.x)
+            hasher.combine(self.y)
+    }
+    
+    // 不是所有的类型都可以用全等号 == 进行比较的  比如我们自定义的类型和结构体
+    // Swift标准库中定义了 Equatable 协议 这个协议要求class/struct实现全等操作符和不等操作符
+    static func ==(lh: Pixel, rh: Pixel) -> Bool {
+        return lh.x == rh.x && rh.y == lh.y
+    }
+}
+
+
+
 // extension Stack<Element> 扩展可以直接用类型参数名
 extension Stack {
     // 计算属性。 扩展中不能有存储属性
@@ -40,6 +79,16 @@ extension Stack {
         return array.isEmpty ? nil: array[array.count - 1]; // 三目运算符
     }
     
+}
+
+func findFirstMatched<T:Equatable>(_ array:[T], _ wanted:T)->Int?
+{
+    for (index,value) in array.enumerated() {
+        if (value == wanted) {
+            return index
+        }
+    }
+    return nil
 }
 
 
@@ -74,7 +123,9 @@ func GenericTypesEntry() -> Void
     }// temp2 并没有新增加的4
     
     
- 
+    // 类型约束 必须继承某个类或者某个协议/协议组合
+
+    print("类型约束 全等操作符== 必须继承标准库协议Equatable \(findFirstMatched([Pixel(2,3), Pixel(7,6), Pixel(1,200), Pixel(5,6)],Pixel(1,200))!)" );
     
     
 }
