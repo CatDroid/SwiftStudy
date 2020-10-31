@@ -11,6 +11,7 @@
 		B074E4942543B02300A3CBD3 /* MyClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = B074E4932543B02300A3CBD3 /* MyClass.swift */; };
 		B074E4972545973000A3CBD3 /* ProtocolClassEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = B074E4962545973000A3CBD3 /* ProtocolClassEntry.swift */; };
 		B074E49E2545B00200A3CBD3 /* ExtensionEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = B074E49D2545B00200A3CBD3 /* ExtensionEntry.swift */; };
+		B089036C254D288B00349129 /* GenericTypesEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = B089036B254D288B00349129 /* GenericTypesEntry.swift */; };
 		B0E5C98E25303F3A00304828 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0E5C98D25303F3A00304828 /* main.swift */; };
 		B0E5C99625303FE500304828 /* ConsoleIO.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0E5C99525303FE500304828 /* ConsoleIO.swift */; };
 /* End PBXBuildFile section */
@@ -32,6 +33,7 @@
 		B074E4932543B02300A3CBD3 /* MyClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyClass.swift; sourceTree = "<group>"; };
 		B074E4962545973000A3CBD3 /* ProtocolClassEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtocolClassEntry.swift; sourceTree = "<group>"; };
 		B074E49D2545B00200A3CBD3 /* ExtensionEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionEntry.swift; sourceTree = "<group>"; };
+		B089036B254D288B00349129 /* GenericTypesEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericTypesEntry.swift; sourceTree = "<group>"; };
 		B0E5C98A25303F3A00304828 /* SwiftCommand */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = SwiftCommand; sourceTree = BUILT_PRODUCTS_DIR; };
 		B0E5C98D25303F3A00304828 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		B0E5C99525303FE500304828 /* ConsoleIO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsoleIO.swift; sourceTree = "<group>"; };
@@ -73,6 +75,7 @@
 				B074E4932543B02300A3CBD3 /* MyClass.swift */,
 				B074E4962545973000A3CBD3 /* ProtocolClassEntry.swift */,
 				B074E49D2545B00200A3CBD3 /* ExtensionEntry.swift */,
+				B089036B254D288B00349129 /* GenericTypesEntry.swift */,
 			);
 			path = SwiftCommand;
 			sourceTree = "<group>";
@@ -137,6 +140,7 @@
 				B074E4942543B02300A3CBD3 /* MyClass.swift in Sources */,
 				B074E4972545973000A3CBD3 /* ProtocolClassEntry.swift in Sources */,
 				B074E49125433B3E00A3CBD3 /* ClassEntry.swift in Sources */,
+				B089036C254D288B00349129 /* GenericTypesEntry.swift in Sources */,
 				B074E49E2545B00200A3CBD3 /* ExtensionEntry.swift in Sources */,
 				B0E5C98E25303F3A00304828 /* main.swift in Sources */,
 				B0E5C99625303FE500304828 /* ConsoleIO.swift in Sources */,
