@@ -90,11 +90,32 @@ func dumpSignature(array:[Double])
     print("");
 }
 
+func dictionnaryFun(_ temp:[Int:String]) -> Void
+{
+    for one in temp {
+        print("dictionnary作为参数以及实参是字典字面量 \(one.key) \(one.value)")
+    }
+}
 
-func inc(i:inout Int) {
+/**
+ 使用inout定义函数参数,调用时需加&符号
+ */
+func inc(_ i:inout Int) {
     i += 1
     //i++ // 为什么Swift删除了自增(++)和自减(--)运算符 https://www.zhihu.com/question/269146744
 }
+
+// 这是因为inout不是按引用传递，它只是在函数退出时写入调用方的参数的可变影子副本
+// @escaping 逃逸闭包 不能捕捉 inout参数 
+//
+//func inc2(i: inout Int) -> () -> Int {
+//
+//    return {
+//        () -> Int in
+//        i += 1
+//        return i
+//    }  // 闭包中截获inout参数i
+//}
 
 func ExtensionEntry()
 {
@@ -110,5 +131,15 @@ func ExtensionEntry()
     print("扩展嵌套类型 \( (-200.0).Signature )") // 扩展嵌套类型 Negative
     
     dumpSignature(array:[-1.0, 2, 4.0, 0, 100, -2, -3.333]);
+    
+    dictionnaryFun([1:"one", 2:"two", 3:"three"])
+    
+    
+    var argument = 0
+    inc(&argument)
+    print("输入输出参数(In-Out Parameter)  after 0->\(argument) ")
+    
+    
+    
 }
 
