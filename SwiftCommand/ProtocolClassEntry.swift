@@ -13,6 +13,7 @@ protocol MyInterface {
     
     var readOnlyProperty:Bool {get}
     
+    // 协议不用指定属性是计算还是存储 只要指定名字 类型和 只读还是可读可写  具体实现类结构体中 属性可以是存储属性也可以是计算属性
     var readWriteProperty:String {get set}
     
     //static let classProperty:Int{get set} //error  'let' declarations cannot be computed properties
