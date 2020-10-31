@@ -90,6 +90,12 @@ func dumpSignature(array:[Double])
     print("");
 }
 
+
+func inc(i:inout Int) {
+    i += 1
+    //i++ // 为什么Swift删除了自增(++)和自减(--)运算符 https://www.zhihu.com/question/269146744
+}
+
 func ExtensionEntry()
 {
 
