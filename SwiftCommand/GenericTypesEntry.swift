@@ -92,6 +92,36 @@ func findFirstMatched<T:Equatable>(_ array:[T], _ wanted:T)->Int?
 }
 
 
+// 关联类型，协议中的泛型 在协议实现之前都不需要指定
+protocol MyContainerProtocol {
+    
+    associatedtype U
+    // 实现类可以 使用  typealias WeightType = Double
+    
+    mutating func addOne(_ one:U)
+    
+    subscript(i:Int) -> U  { get } // subscript只支持读
+    
+    var myCount:Int {get}  // 只读属性
+    
+}
+
+extension Array : MyContainerProtocol{
+
+    typealias U = Element
+    
+    var myCount: Int {
+        return self.count
+    }
+    
+    mutating func addOne(_ one:U)
+    {
+        self.append(one)
+    }
+    
+}
+
+
 func GenericTypesEntry() -> Void
 {
     var a = 2 ;
@@ -124,8 +154,12 @@ func GenericTypesEntry() -> Void
     
     
     // 类型约束 必须继承某个类或者某个协议/协议组合
-
     print("类型约束 全等操作符== 必须继承标准库协议Equatable \(findFirstMatched([Pixel(2,3), Pixel(7,6), Pixel(1,200), Pixel(5,6)],Pixel(1,200))!)" );
+    
+    
+    var extesionArray = [2, 7 ,8]
+    extesionArray.addOne(1);
+    print("协议中的关联类型 associateType 和 typealias  \(extesionArray.myCount)" ) // 4
     
     
 }
